@@ -1,0 +1,60 @@
+[Virtualenv](https://pypi.python.org/pypi/virtualenv) is your best friend if you have to create a python project and have it run on various different environments, ex: staging, development, production etc. Virtualenv creates an isolated python environment for your python scripts. The basic problem being addressed is one of dependencies and versions, and indirectly permissions. So when you want to replicate your project elsewhere, you don't have to deal with the mess of existing python libraries installed that may be the right version you want for your project anyway. Without further ado, lets get started. Imagine you have a user ramsey and you want to create a staging environment. Run the following code:
+
+    ~/staging $ cd /home/ramsey
+    ~/staging $ sudo apt-get update
+    ~/staging $ sudo apt-get install python-setuptools python-dev build-essential git-core -y
+
+Now you have easy_install, let's go ahead and install pip and virtualenv
+
+    ~/staging $ sudo easy_install pip
+    ~/staging $ sudo pip install virtualenv
+
+We have all we need to get started. Let's make a staging directory to house our virtual python environment
+
+    ~/staging $ virtualenv staging
+    ~/staging $ cd staging
+    ~/staging $ source ./bin/activate
+
+Once you activate your virtualenv, you will notice a your virtualenv appear in brackets ex: *(staging)* before your command prompt. This means you are now using the python packages from within your virtualenv. Even the python interpreter you use is located in the bin folder within your virtualenv. 
+
+    (staging) ~/staging $ which python
+    /home/ramsey/staging/bin/python
+
+To see a list of all the current packages installed in our environment, we can use a python package called [yolk](https://pypi.python.org/pypi/yolk/0.4.3).
+
+    (staging) ~/staging $ pip install yolk
+    (staging) ~/staging $ yolk -l
+    Python          - 2.7.3        - active development (/usr/lib/python2.7/lib-dynload)
+    argparse        - 1.2.1        - active development (/usr/lib/python2.7)
+    distribute      - 0.6.24       - active 
+    pip             - 1.1          - active 
+    wsgiref         - 0.1.2        - active development (/usr/lib/python2.7)
+    yolk            - 0.4.3        - active 
+
+
+You will see a list of all the packages you have active in your current environment and its source. Next let's install django and house our django project in our src folder as is convention.
+
+    (staging) ~/staging $ pip install django
+    (staging) ~/staging $ mkdir src
+    (staging) ~/staging $ cd src
+    (staging) ~/staging/src $ django-admin.py startproject butterflies
+
+At this stage lets version control everything up till now so we can easily replicate our environment elsewhere. Apart from versioning our django project we will also want to save a list of packages and their versions onto a requirements.txt file so we can easily resurrect a new virtualenv with that information.
+
+    (staging) ~/staging/src $ git init
+    (staging) ~/staging/src $ pip freeze > requirements.txt
+    (staging) ~/staging/src $ git commit -a -m 'first commit' 
+
+You are all done! To run your application simply run:
+
+    (staging) ~/staging/src $ cd butterflies && python manage.py runserver
+
+What *source ./bin/activate* actually does is change your global *PYTHONPATH* variable such that you use the lib and bin folders in your virtualenv folder and not those contained in your system installation of python. When you are all done playing with your new virtual environment, you can return your *PYTHONPATH* back to the way it was by running the command
+
+    (staging) ~/staging/src $ deactivate
+    ~/staging/src $
+
+You will notice the *(staging)* denotation disappear, informing you that things are back to the way it was and you will have to be careful about your usage of any python programs or scripts!
+
+In the next blog post, I will cover how you can recreate and deploy a bootstrapped version of your django project with all the requirements and dependencies intact to another location using a deployment tool called [fabric](http://docs.fabfile.org/en/1.7/) which runs over the ssh protocol.
+

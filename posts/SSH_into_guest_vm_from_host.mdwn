@@ -1,0 +1,28 @@
+To be able to host into your ssh guest ubuntu machine from your host terminal (I use mac osx), follow these steps:
+
+1. If you are using virtualbox, set the first network adapter to be "Bridged Adapter" with name "en0", set the second network adapter to be "Host-only Adapter" with name "vboxnet0".
+
+1. Go to terminal and type ifconfig vboxnet0 like so:
+
+    Ramseys-MacBook-Pro:AWS ramseydsilva$ ifconfig vboxnet0
+    vboxnet0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500
+        ether 0a:00:27:00:00:00 
+        inet 192.168.56.1 netmask 0xffffff00 broadcast 192.168.56.255
+
+1. Go into your host machine and edit the /etc/network/interfaces file and add the following at the bottom:
+
+    auto eth1
+    iface eth1 inet static
+    address 192.168.56.10
+    netmask 255.255.255.0
+
+1. Now install openssh-server and avahi-daemon on your guest machine. OpenSSH installs the ssh server such that another machine can connect via ssh to your machine. Avahi deamon makes it possible to connect to your guest machine from your host by using its hostname by publishing the hostname into the network. Run:
+
+    sudo apt-get install openssh-server && sudo apt-get install avahi-daemon
+
+1. Now go to your host's terminal and run:
+
+   ssh ramsey@ubuntu-coderfly.local
+
+where ramsey is your username and ubuntu-coderfly is your vm's hostname. At this point, you should be able to connect successfully.
+
