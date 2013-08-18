@@ -15,17 +15,14 @@ See [setup](http://ikiwiki.info/setup/) for more customization options. Your new
 
 If you want to run our copy of the blog, grab our open sourced version
 
-    git clone git@github.com:ramseydsilva/blog.git ~/coderfly-blog.setup
+    git clone git@github.com:ramseydsilva/blog.git ~/coderfly-blog
 
-Then change the *srcdir* setting in your ikiwiki blog setup file (~/blog.setup) to ~/coderfly-blog.setup. Then run
+Then change the *srcdir* setting in your ikiwiki blog setup file (~/blog.setup) to ~/coderfly-blog and run
 
-    cd coderfly-blog.setup
-    git remote rm origin
-    git remote add origin git@github.com:ramseydsilva/blog.git
+    cd coderfly-blog
+    git remote set-url --add origin git@github.com:ramseydsilva/blog.git
     ikiwiki --setup ~/blog.setup
 
-All done! Although you won't be able to push, you can pull our updates at any time. If you want to contribute to this blog, fork our blog on github and send us a [pull request](https://help.github.com/articles/using-pull-requests).
-
-You will notice that this blog is fairly new. We will customize our layout and features in the coming days... stay tuned!
+Now you should be able to see all the posts we have on our blog on your local cloned repo and your locally hosted coderfly blog. Although you won't be able to push to our repository, you can pull updates at any time. You will notice that this blog is fairly new. We will customize our layout and features in the coming days... stay tuned!
 
 [[!tag  ikiwiki blog]]
