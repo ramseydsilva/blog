@@ -12,8 +12,8 @@ Then I had to go to my second machine where I wanted to clone my dotfiles repo a
 
     ~/dotfiles $ git clone https://github.com/ramseydsilva/dotfiles
     ~/dotfiles $ cd dotfiles
-    ~/dotfiles $ git submodules init
-    ~/dotfiles $ git submodules update
+    ~/dotfiles $ git submodule init
+    ~/dotfiles $ git submodule update
     ~/dotfiles $ ln -s .vim ~/.vim  # Symlink config files within your repo to a place your system can find and read them
     ~/dotfiles $ ln -s .vimrc ~/.vimrc
 
