@@ -1,0 +1,4 @@
+[[!meta title="pages tagged vm"]]
+
+[[!inline pages="tagged(vm)" actions="no" archive="yes"
+feedshow=10]]
