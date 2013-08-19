@@ -1,0 +1,22 @@
+I had a problem while trying to import my dotfiles on a second machine recently. Dotfiles are files/folders that begin with dots "." and are often times hidden in many operating systems. I use a [dotfiles repository](https://github.com/ramseydsilva/dotfiles) to store dotfiles that customize my usage of vim such that I can carry over my vim configuration from one machine to another simply by doing a git clone and some smart symlinking. The result is a standardized experience of using vim (My primary code editor) across all my ubuntu boxes (locally and on the server). Apart from revisioning your vim configuration files, you can pretty much revision config files for any other tools that you use across multiple platforms.
+
+The problem I ran into was that I had a git project *ctrlp* within my main dotfiles git project. When I ran a git clone on my second machine, the ctrlp folder was empty. I later found out that git by default doesn't version git projects within subdirectories of your main git project. To be able to revision control a git project such as ctrlp within my main git project, I had to use Git Submodules
+
+    ~/dotfiles $ rm -rf .vim/bundle/ctrlp.vim
+    ~/dotfiles $ git add . -A
+    ~/dotfiles $ git commit -m "Removed untracked ctrlp.vim project"
+    ~/dotfiles $ git submodule add https://github.com/kien/ctrlp.vim.git .vim/bundle/ctrlp.vim/
+    ~/dotfiles $ git commit -m "Added ctrlp.vim plugin as a git submodule so it can be tracked by git"
+
+Then I had to go to my second machine where I wanted to clone my dotfiles repo and run:
+
+    ~/dotfiles $ git clone https://github.com/ramseydsilva/dotfiles
+    ~/dotfiles $ cd dotfiles
+    ~/dotfiles $ git submodules init
+    ~/dotfiles $ git submodules update
+    ~/dotfiles $ ln -s .vim ~/.vim  # Symlink config files within your repo to a place your system can find and read them
+    ~/dotfiles $ ln -s .vimrc ~/.vimrc
+
+It is usually not encouraged to store git projects within git projects for various reasons. Your embedded git project by default doesn't occur within a branch, rather in a detached HEAD state. As a result, you could very likely lose track of changes you make in this state if you are not careful. If you are not planning to work on both projects simultaneoulsy, you should be safe. If you plan to otherwise, there are ways to overcome this issue. To learn more go [here](http://git-scm.com/book/en/Git-Tools-Submodules).
+
+[[!tag vim dotfiles git howto]]
