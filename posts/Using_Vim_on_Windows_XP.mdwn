@@ -10,7 +10,7 @@ One of the greatest disappointment of all times was when I found out I was given
 
 Fire up Git Bash (The shortcut you created on your desktop earlier) and run:
 
-     $ cd ~
+    $ cd ~
     $ git clone https://github.com/ramseydsilva/dotfiles dotfiles
     $ cd ~/dotfiles
     $ git submodule init
