@@ -29,5 +29,5 @@ Tip: If you need to find the location of your .vimrc and your .vim folder on you
 
 You have now ported over your vim configuration files onto your windows vim installation, albeit some hacks. For me this setup works fine where I can use my vim editor to write code, and git for versioning. I use this setup in conjunction with [Microsoft Visual Web Developer 2010 Express](http://www.microsoft.com/visualstudio/eng/products/visual-studio-2010-express) to develop my ASP apps. It's not ideal but with having git and vim available, it took most of the pain away. In a future blog post, I will touch upon my development workflow that I employ to deploy onto a windows server.
 
-[[!tags windows vim git asp.net ]]
+[[!tag windows vim git asp.net ]]
     
