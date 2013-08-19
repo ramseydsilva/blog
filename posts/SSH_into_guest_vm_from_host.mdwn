@@ -26,3 +26,4 @@ To be able to host into your ssh guest ubuntu machine from your host terminal (I
 
 where ramsey is your username and ubuntu-coderfly is your vm's hostname. At this point, you should be able to connect successfully.
 
+[[!tag  vm webdev dev_environment ]]

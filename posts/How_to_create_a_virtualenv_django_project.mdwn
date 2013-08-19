@@ -58,3 +58,4 @@ You will notice the *(staging)* denotation disappear, informing you that things 
 
 In the next blog post, I will cover how you can recreate and deploy a bootstrapped version of your django project with all the requirements and dependencies intact to another location using a deployment tool called [fabric](http://docs.fabfile.org/en/1.7/) which runs over the ssh protocol.
 
+[[!tag  django virtualenv python ]]
