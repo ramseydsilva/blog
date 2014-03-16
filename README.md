@@ -5,7 +5,7 @@ This is the dev blog of (ramseydsilva][http://github.com/ramseydsilva). It is bu
 
 The reason I opted for ikiwiki is:
 
-* Can easily write/edit/delete a post with vim, saving you the time to switch away from your terminal to do the same.
+* Can easily write/edit/delete a post with vim, saving you time having to switch away from terminal.
 * No database. All posts are saved as mkdwn files.
 * Easily forkable to allow multiple collaborators.
 * And best of all, versioned using git!
