@@ -1,0 +1,91 @@
+# Installing Wordpress on Ubuntu 12.04
+
+[Here](http://blog.ramseydsilva.com/2014/03/finally-gave-in/) is my long drawn post on how I finally gave into using wordpress for personal blogging. A lot of people choose to let wordpress install and host their blogs. But if you'd like, it's rather simple to install and host it on your server. Here are the steps.
+
+    sudo apt-get install wordpress
+    cp -r /usr/share/wordpress /home/ramsey/wordpress  # replace with your custom location
+
+Alternatively, you can download the latest tar version straight from their website.
+
+    cd /home/ramsey
+    wget http://wordpress.org/latest.tar.gz
+    tar -xzvf latest.tar.gz wordpress
+
+Now we create our database 
+
+    mysql -u root -p
+    CREATE DATABASE blog;
+    Query OK, 1 row affected (0.00 sec)
+    CREATE USER bloguser@localhost;
+    Query OK, 0 rows affected (0.00 sec)
+    SET PASSWORD FOR bloguser@localhost= PASSWORD("blogpassword");
+    Query OK, 0 rows affected (0.00 sec)
+    GRANT ALL PRIVILEGES ON blog.* TO bloguser@localhost IDENTIFIED BY "blogpassword";
+    Query OK, 0 rows affected (0.00 sec)
+    FLUSH PRIVILEGES;
+    Query OK, 0 rows affected (0.00 sec)
+    exit
+
+Next create our config file
+
+    cd wordpress
+    cp wp-config-sample.php wp-config.php
+    vi wp-config.php
+
+Edit the portion corresponding to the database in the previous step
+
+    // ** MySQL settings - You can get this info from your web host ** //
+    /** The name of the database for WordPress */
+    define('DB_NAME', 'blog');
+
+    /** MySQL database username */
+    define('DB_USER', 'bloguser');
+
+    /** MySQL database password */
+    define('DB_PASSWORD', 'blogpassword');
+
+Save and exit. I use nginx webserver, but you can use any webserver to serve your blog. Here are steps to configure nginx to do so.
+
+    cd /etc/nginx/sites-available/
+    vi blog
+
+Enter the following
+
+    server {
+        listen   [::]:80;
+    
+        root /home/ramsey/wordpress/;
+        index index.php index.html index.htm;
+    
+    server_name blog.mydomain.com;
+    
+    location / { 
+        try_files $uri $uri/ /index.php?q=$uri&$args;
+    }   
+    
+    error_page 404 /404.html;
+    
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/www;
+    }   
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+     }   
+}
+
+Save and quit. Then:
+
+    ln -s /etc/nginx/sites-available/blog /etc/nginx/sites-enabled/blog
+    sudo service nginx restart
+
+Now point your web browser to blog.mydomain.com and you should see a Welcome page with the next step guided installation process. 
+
+Enjoy blogging!
+
+***
