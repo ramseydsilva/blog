@@ -1,5 +1,10 @@
-Using Github Gists
-==================
-
 [Gist](https://gist.github.com/) is a simple way to share snippets and pastes with others. All gists are Git repositories, so they are automatically versioned, forkable and usable from Git.
 
+### Using Gists
+
+If you find a gist you want to use for yourself for example [this](https://gist.github.com/527113/307c2dec09ceeb647b8fa1d6d49591f3352cb034) gist gives you an easy way to check if a django db table exists.
+
+    git clone https://gist.github.com/527113.git utility
+    cd utility && mv gistfile1.py db.py
+
+In your python program you can now use this gist by importing utility.db
